@@ -1,0 +1,18 @@
+Mon Feb  5 17:26:57 2024
+[INFO]: Starting the SceneManager
+[INFO]: OpenGL version: 4.6.0 - Build 31.0.101.4255
+[INFO]: Graphics card vendor Intel
+[INFO]: Graphics card name Intel(R) UHD Graphics
+[INFO]: GLSL Version 4.60 - Build 31.0.101.4255
+[INFO]: Created Scene0: 
+[INFO]: Loading assets Scene0: 
+[INFO]: Uniforms:
+"lightPos" loc:3
+"modelMatrix" loc:2
+"projectionMatrix" loc:0
+"viewMatrix" loc:1
+"myTexture" loc:4
+
+[INFO]: Deleting the SceneManager
+[INFO]: Deleting assets Scene0: 
+[INFO]: Deleted Scene0: 
