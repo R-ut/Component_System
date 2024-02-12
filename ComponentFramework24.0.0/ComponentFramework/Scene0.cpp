@@ -6,6 +6,7 @@
 #include "Debug.h"
 #include "Body.h"
 #include <Quaternion.h>
+#include <QMath.h>
 
 Scene0::Scene0() :sphere{nullptr}, shader{nullptr}, mesh{nullptr},
 drawInWireMode{false} {
@@ -27,17 +28,17 @@ bool Scene0::OnCreate() {
 	if (!mario) {return false;}
 	mario->AddComponent<MeshComponent>(nullptr, "meshes/Mario.obj");
 	mario->AddComponent<ShaderComponent>(nullptr,"shaders/textureVert.glsl","shaders/textureFrag.glsl");
-	mario->AddComponent<TransformComponent>(nullptr, Quaternion(), Vec3(),Vec3(1.0f, 1.0f, 1.0f));
+	mario->AddComponent<TransformComponent>(nullptr, Quaternion(),Vec3());
 	mario->AddComponent<MaterialComponent>(nullptr, "textures/mario_main.png");
 	mario->OnCreate();
 	mario->ListComponents();
 	modelMatrix.loadIdentity();
 
-	hammer = new Actor(nullptr);
+	hammer = new Actor(mario);
 	if (!hammer) { return false; }
 	hammer->AddComponent<MeshComponent>(nullptr, "meshes/Hammer.obj");
 	hammer->AddComponent<ShaderComponent>(nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
-	hammer->AddComponent<TransformComponent>(nullptr, Quaternion(), Vec3(), Vec3(1.0f, 1.0f, 1.0f));
+	hammer->AddComponent<TransformComponent>(nullptr, QMath::angleAxisRotation(-90.0f, Vec3(1.0f, 0.0f, 0.0f)), Vec3(1.1f, 1.0f, 0.0f));
 	hammer->AddComponent<MaterialComponent>(nullptr, "textures/hammer_BaseColor.png");
 	hammer->OnCreate();
 	hammer->ListComponents();
@@ -76,6 +77,10 @@ void Scene0::HandleEvents(const SDL_Event &sdlEvent) {
 }
 
 void Scene0::Update(const float deltaTime) {
+	static float angle = 0.0f;
+	angle += 20 * deltaTime;
+	Quaternion rotation = QMath::angleAxisRotation(angle, Vec3(0.0f, 1.0f, 0.0f));
+	mario->GetComponent<TransformComponent>()->SetOrientation(rotation);
 }
 
 void Scene0::Render() const {
@@ -109,7 +114,6 @@ void Scene0::Render() const {
 	glUniformMatrix4fv(sc->GetUniformID("modelMatrix"), 1, GL_FALSE, hammer->GetComponent<TransformComponent>()->getModelmatrix());
 	glBindTexture(GL_TEXTURE_2D, hammer->GetComponent<MaterialComponent>()->getMaterialID());
 	hammer->GetComponent<MeshComponent>()->Render();
-	mc->Render(GL_TRIANGLES);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glUseProgram(0);
 }

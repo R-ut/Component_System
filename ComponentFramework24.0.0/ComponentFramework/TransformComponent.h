@@ -17,7 +17,7 @@ private:
 	Vec3 position;
 	Vec3 scale;
 public:
-	TransformComponent(Component* parent_, Quaternion orientation_, Vec3 position_, Vec3 scale_);
+	TransformComponent(Component* parent_, Quaternion orientation_, Vec3 position_, Vec3 scale_ = Vec3(1.0f, 1.0f, 1.0f));
 	~TransformComponent();
 	virtual bool OnCreate() override;
 	virtual void OnDestroy() override;
@@ -26,4 +26,7 @@ public:
 	Matrix4 getModelmatrix() const {
 		return MMath::translate(position) * MMath::scale(scale) * MMath::toMatrix4(orientation);
 	}
+
+	Quaternion getOrientation() const { return orientation; }
+	void SetOrientation(Quaternion orientation_) { orientation = orientation_; }
 };
