@@ -28,7 +28,7 @@ bool Scene0::OnCreate() {
 	if (!mario) {return false;}
 	mario->AddComponent<MeshComponent>(nullptr, "meshes/Mario.obj");
 	mario->AddComponent<ShaderComponent>(nullptr,"shaders/textureVert.glsl","shaders/textureFrag.glsl");
-	mario->AddComponent<TransformComponent>(nullptr, Quaternion(),Vec3());
+	mario->AddComponent<TransformComponent>(nullptr, Quaternion(), Vec3());
 	mario->AddComponent<MaterialComponent>(nullptr, "textures/mario_main.png");
 	mario->OnCreate();
 	mario->ListComponents();
@@ -38,7 +38,7 @@ bool Scene0::OnCreate() {
 	if (!hammer) { return false; }
 	hammer->AddComponent<MeshComponent>(nullptr, "meshes/Hammer.obj");
 	hammer->AddComponent<ShaderComponent>(nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
-	hammer->AddComponent<TransformComponent>(nullptr, QMath::angleAxisRotation(-90.0f, Vec3(1.0f, 0.0f, 0.0f)), Vec3(1.1f, 1.0f, 0.0f));
+	hammer->AddComponent<TransformComponent>(nullptr, QMath::angleAxisRotation(-90.0f, Vec3(1.0f, 0.0f, 0.0f)), Vec3(1.1f, 0.0f, 0.0f));
 	hammer->AddComponent<MaterialComponent>(nullptr, "textures/hammer_BaseColor.png");
 	hammer->OnCreate();
 	hammer->ListComponents();
@@ -111,7 +111,7 @@ void Scene0::Render() const {
 
 
 
-	glUniformMatrix4fv(sc->GetUniformID("modelMatrix"), 1, GL_FALSE, hammer->GetComponent<TransformComponent>()->getModelmatrix());
+	glUniformMatrix4fv(sc->GetUniformID("modelMatrix"), 1, GL_FALSE,tc->getModelmatrix() *  hammer->GetComponent<TransformComponent>()->getModelmatrix());
 	glBindTexture(GL_TEXTURE_2D, hammer->GetComponent<MaterialComponent>()->getMaterialID());
 	hammer->GetComponent<MeshComponent>()->Render();
 	glBindTexture(GL_TEXTURE_2D, 0);
