@@ -30,11 +30,19 @@ void Actor::Render() const {
 
 Matrix4 Actor::GetModelMatrix() const
 {
+	Matrix4 modelMatrix;
 	TransformComponent* tc = GetComponent<TransformComponent>();
 	if (tc != nullptr) {
-		return tc->getModelmatrix();
+		modelMatrix = tc->getModelmatrix();
+		return modelMatrix;
 	}
-	return Matrix4();
+	else {
+		modelMatrix.loadIdentity();
+	}
+	if (parent) {
+		modelMatrix = dynamic_cast<Actor*>(parent)->GetModelMatrix() * modelMatrix;
+	}
+	return modelMatrix;
 }
 
 void Actor::ListComponents() const {

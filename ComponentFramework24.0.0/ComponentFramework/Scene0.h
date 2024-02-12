@@ -26,6 +26,7 @@ private:
 	Matrix4 modelMatrix;
 	bool drawInWireMode;
 	Actor* mario;
+	Actor* hammer;
 public:
 	explicit Scene0();
 	virtual ~Scene0();
