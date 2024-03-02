@@ -3,6 +3,7 @@
 #include "Timer.h"
 #include "Window.h"
 #include "Scene0.h"
+#include "Scene1.h"
 
 SceneManager::SceneManager(): 
 	currentScene{nullptr}, window{nullptr}, timer{nullptr},
@@ -46,7 +47,7 @@ bool SceneManager::Initialize(std::string name_, int width_, int height_) {
 	}
 
 	/********************************   Default first scene   ***********************/
-	BuildNewScene(SCENE_NUMBER::SCENE0);
+	BuildNewScene(SCENE_NUMBER::SCENE1);
 	/********************************************************************************/
 	return true;
 }
@@ -86,6 +87,8 @@ void SceneManager::HandleEvents() {
 			case SDL_SCANCODE_F2:
 			case SDL_SCANCODE_F3:
 			case SDL_SCANCODE_F4:
+				BuildNewScene(SCENE_NUMBER::SCENE1);
+				break;
 			case SDL_SCANCODE_F5:
 		
 				BuildNewScene(SCENE_NUMBER::SCENE0);
@@ -119,10 +122,10 @@ bool SceneManager::BuildNewScene(SCENE_NUMBER scene) {
 		status = currentScene->OnCreate();
 		break;
 
-	/*case SCENE_NUMBER::SCENE1:
+	case SCENE_NUMBER::SCENE1:
 		currentScene = new Scene1();
 		status = currentScene->OnCreate();
-		break;*/
+		break;
 
 	default:
 		Debug::Error("Incorrect scene number assigned in the manager", __FILE__, __LINE__);
