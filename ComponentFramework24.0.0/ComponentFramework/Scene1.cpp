@@ -31,15 +31,32 @@ bool Scene1::OnCreate() {
 	board->OnCreate();
 	board->ListComponents();
 	modelMatrix.loadIdentity();
-
-	checker = new Actor(board);
+	for (int i = 0; i < 4; i++) {
+		redCheckers.push_back(new Actor(board));
+	}
+	int i = 0;
+	for (auto checker : redCheckers) {
+		if (!checker) { return false; }
+		checker->AddComponent<MeshComponent>(nullptr, "meshes/CheckerPiece.obj");
+		checker->AddComponent<ShaderComponent>(nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
+		checker->AddComponent<TransformComponent>(nullptr, Quaternion(), Vec3(-3.1f + (i * 1.25*2), 4.3f, 0), Vec3(0.1f, 0.1f, 0.1f));
+		checker->AddComponent<MaterialComponent>(nullptr, "textures/redCheckerPiece.png");
+		checker->OnCreate();
+		checker->ListComponents();
+		i++;
+	}
+	/*checker = new Actor(board);
 	if (!checker) { return false; }
 	checker->AddComponent<MeshComponent>(nullptr, "meshes/CheckerPiece.obj");
 	checker->AddComponent<ShaderComponent>(nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
 	checker->AddComponent<TransformComponent>(nullptr, Quaternion(), Vec3(-3.1f,4.3f,0),Vec3(0.1f,0.1f,0.1f));
 	checker->AddComponent<MaterialComponent>(nullptr, "textures/redCheckerPiece.png");
 	checker->OnCreate();
-	checker->ListComponents();
+	checker->ListComponents();*/
+	//create 2 vectors one for red checker and other for black
+	// each vector will have 12 pieces in total ,  1.2 is the difference between two consecutive black squares
+	// u will need to use double for loop one to check the lines and other to check the columns, 
+	// each line will have 4 pieces 
 	//once u get one checkered piece just make the top left one a parent and all of them to follow it through a vector. 
 	return true;
 }
@@ -107,12 +124,13 @@ void Scene1::Render() const {
 	mc->Render(GL_TRIANGLES);
 
 
-
-	glUniformMatrix4fv(sc->GetUniformID("modelMatrix"), 1, GL_FALSE, tc->getModelmatrix() * checker->GetComponent<TransformComponent>()->getModelmatrix());
-	glBindTexture(GL_TEXTURE_2D, checker->GetComponent<MaterialComponent>()->getMaterialID());
-	checker->GetComponent<MeshComponent>()->Render();
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glUseProgram(0);
+	for (auto checker : redCheckers) {
+		glUniformMatrix4fv(sc->GetUniformID("modelMatrix"), 1, GL_FALSE, tc->getModelmatrix() * checker->GetComponent<TransformComponent>()->getModelmatrix());
+		glBindTexture(GL_TEXTURE_2D, checker->GetComponent<MaterialComponent>()->getMaterialID());
+		checker->GetComponent<MeshComponent>()->Render();
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+		glUseProgram(0);
 }
 
 

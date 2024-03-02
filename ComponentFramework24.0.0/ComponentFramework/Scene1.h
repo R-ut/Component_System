@@ -26,6 +26,7 @@ private:
 	bool drawInWireMode;
 	Actor* board;
 	Actor* checker;
+	std::vector<Actor*> redCheckers;
 public:
 	explicit Scene1();
 	virtual ~Scene1();
