@@ -1,4 +1,4 @@
-Sat Mar  2 16:38:03 2024
+Sat Mar  2 17:49:19 2024
 [INFO]: Starting the SceneManager
 [INFO]: OpenGL version: 4.6.0 - Build 31.0.101.4255
 [INFO]: Graphics card vendor Intel
@@ -6,6 +6,34 @@ Sat Mar  2 16:38:03 2024
 [INFO]: GLSL Version 4.60 - Build 31.0.101.4255
 [INFO]: Created Scene1: 
 [INFO]: Loading assets Scene1: 
+[INFO]: Uniforms:
+"lightPos" loc:3
+"modelMatrix" loc:2
+"projectionMatrix" loc:0
+"viewMatrix" loc:1
+"myTexture" loc:4
+
+[INFO]: Uniforms:
+"lightPos" loc:3
+"modelMatrix" loc:2
+"projectionMatrix" loc:0
+"viewMatrix" loc:1
+"myTexture" loc:4
+
+[INFO]: Uniforms:
+"lightPos" loc:3
+"modelMatrix" loc:2
+"projectionMatrix" loc:0
+"viewMatrix" loc:1
+"myTexture" loc:4
+
+[INFO]: Uniforms:
+"lightPos" loc:3
+"modelMatrix" loc:2
+"projectionMatrix" loc:0
+"viewMatrix" loc:1
+"myTexture" loc:4
+
 [INFO]: Uniforms:
 "lightPos" loc:3
 "modelMatrix" loc:2
