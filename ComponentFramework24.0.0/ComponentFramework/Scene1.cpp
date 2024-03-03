@@ -31,24 +31,29 @@ bool Scene1::OnCreate() {
 	board->OnCreate();
 	board->ListComponents();
 	modelMatrix.loadIdentity();
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < 12; i++) {
 		redCheckers.push_back(new Actor(board));
 	}
-	int i = 0;
-	int j = 0;
+	float i = 0.5f;
+	float j = 0;
 	for (auto checker : redCheckers) {
 		if (!checker) { return false; }
 		checker->AddComponent<MeshComponent>(nullptr, "meshes/CheckerPiece.obj");
 		checker->AddComponent<ShaderComponent>(nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
-		checker->AddComponent<TransformComponent>(nullptr, Quaternion(), Vec3(-3.1f + (i * 1.25 *2), 4.3f - (j * 1.25), 0), Vec3(0.1f, 0.1f, 0.1f));
+		checker->AddComponent<TransformComponent>(nullptr, Quaternion(), Vec3(-4.3f + (i * 1.25 *2), 4.3f - (j * 1.25), 0), Vec3(0.1f, 0.1f, 0.1f));
 		checker->AddComponent<MaterialComponent>(nullptr, "textures/redCheckerPiece.png");
 		checker->OnCreate();
 		checker->ListComponents();
 		i++;
-		if (i % 4 == 0 && i != 0) {
+		if (int(i) % 4 == 0 && i != 0) {
 			j++;
-			i = -1;
+			if (int(j) % 2 != 0 && i != 0) {
+				i = 0;
+			}
+			else { i = 0.5f; }
 			//-3.1f + (i * 1.25 *2) works for the first row
+			// -3.1 , -0.6, 1.9,4.4
+			// -4.3, -1.8,0.7,3.2
 			//-4.3f + (i * 1.25 *2) works for the second row
 		}
 	}
