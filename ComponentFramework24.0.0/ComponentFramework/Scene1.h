@@ -27,6 +27,7 @@ private:
 	Actor* board;
 	Actor* checker;
 	std::vector<Actor*> redCheckers;
+	std::vector<Actor*> blackCheckers;
 public:
 	explicit Scene1();
 	virtual ~Scene1();
