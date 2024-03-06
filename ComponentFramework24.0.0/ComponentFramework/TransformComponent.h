@@ -28,5 +28,7 @@ public:
 	}
 
 	Quaternion getOrientation() const { return orientation; }
+
+	Vec3 getPosition() const { return position; }
 	void SetOrientation(Quaternion orientation_) { orientation = orientation_; }
 };
