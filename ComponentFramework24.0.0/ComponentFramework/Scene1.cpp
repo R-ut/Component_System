@@ -32,7 +32,7 @@ bool Scene1::OnCreate() {
 	board->ListComponents();
 	modelMatrix.loadIdentity();
 	for (int i = 0; i < 12; i++) {
-		redCheckers.push_back(new Actor(board));
+		whiteCheckers.push_back(new Actor(board));
 	}
 
 
@@ -41,12 +41,12 @@ bool Scene1::OnCreate() {
 
 	float i = 0.5f;
 	float j = 0;
-	for (auto checker : redCheckers) {
+	for (auto checker : whiteCheckers) {
 		if (!checker) { return false; }
 		checker->AddComponent<MeshComponent>(nullptr, "meshes/CheckerPiece.obj");
 		checker->AddComponent<ShaderComponent>(nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
 		checker->AddComponent<TransformComponent>(btc,btc->getOrientation(), btc->getPosition() + Vec3(-4.3,4.3,0) + Vec3(i * 2.48, j * -1.2,0 ), Vec3(0.1f, 0.1f, 0.1f));
-		checker->AddComponent<MaterialComponent>(nullptr, "textures/redCheckerPiece.png");
+		checker->AddComponent<MaterialComponent>(nullptr, "textures/whiteCheckerPiece.png");
 		checker->OnCreate();
 		checker->ListComponents();
 		//-2.5,2.55,0
@@ -98,11 +98,11 @@ void Scene1::OnDestroy() {
 	Debug::Info("Deleting assets Scene1: ", __FILE__, __LINE__);
 	board->RemoveAllComponents();
 	board->OnDestroy();
-	for (auto checker : redCheckers) {
+	for (auto checker : whiteCheckers) {
 		checker->RemoveAllComponents();
 		checker->OnDestroy();
 	}
-	for (auto checker : blackCheckers) {
+	for (auto checker :blackCheckers) {
 		checker->RemoveAllComponents();
 		checker->OnDestroy();
 	}
@@ -151,7 +151,7 @@ void Scene1::Render() const {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	/// Set the background color then clear the screen
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.19f,	0.56f,	0.53f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	if (drawInWireMode) {
@@ -175,8 +175,8 @@ void Scene1::Render() const {
 	mc->Render(GL_TRIANGLES);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	for (auto checker : redCheckers) {
-		glUniformMatrix4fv(checker->GetComponent<ShaderComponent>()->GetUniformID("modelMatrix"), 1, GL_FALSE,  tc->getModelmatrix() * checker->GetComponent<TransformComponent>()->getModelmatrix());
+	for (auto checker : whiteCheckers) {
+		glUniformMatrix4fv(checker->GetComponent<ShaderComponent>()->GetUniformID("modelMatrix"), 1, GL_FALSE,  tc->getModelmatrix()* checker->GetComponent<TransformComponent>()->getModelmatrix());
 		glBindTexture(GL_TEXTURE_2D, checker->GetComponent<MaterialComponent>()->getMaterialID());
 		checker->GetComponent<MeshComponent>()->Render(GL_TRIANGLES);
 		glBindTexture(GL_TEXTURE_2D, 0);
