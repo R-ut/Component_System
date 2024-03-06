@@ -96,6 +96,16 @@ bool Scene1::OnCreate() {
 
 void Scene1::OnDestroy() {
 	Debug::Info("Deleting assets Scene1: ", __FILE__, __LINE__);
+	board->RemoveAllComponents();
+	board->OnDestroy();
+	for (auto checker : redCheckers) {
+		checker->RemoveAllComponents();
+		checker->OnDestroy();
+	}
+	for (auto checker : blackCheckers) {
+		checker->RemoveAllComponents();
+		checker->OnDestroy();
+	}
 }
 
 void Scene1::HandleEvents(const SDL_Event& sdlEvent) {
