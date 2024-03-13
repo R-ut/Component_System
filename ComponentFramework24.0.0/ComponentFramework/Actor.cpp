@@ -16,10 +16,7 @@ bool Actor::OnCreate() {
 }
 
 void Actor::OnDestroy() {
-	for (auto component : components) {
-		component->OnDestroy();
-		delete component;
-	}
+	RemoveAllComponents();
 }
 
 void Actor::Update(const float deltaTime) {
@@ -31,7 +28,7 @@ void Actor::Render() const {
 Matrix4 Actor::GetModelMatrix() const
 {
 	Matrix4 modelMatrix;
-	TransformComponent* tc = GetComponent<TransformComponent>();
+	Ref<TransformComponent> tc = GetComponent<TransformComponent>();
 	if (tc != nullptr) {
 		modelMatrix = tc->getModelmatrix();
 		return modelMatrix;
@@ -55,10 +52,7 @@ void Actor::ListComponents() const {
 
 
 void Actor::RemoveAllComponents() {
-	for (auto component : components) {
-		component->OnDestroy();
-		delete component;
-	}
+	RemoveAllComponents();
 	components.clear();
 }
 

@@ -96,10 +96,10 @@ void Scene0::Render() const {
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
-	ShaderComponent* sc = mario->GetComponent<ShaderComponent>();
-	MeshComponent* mc = mario->GetComponent<MeshComponent>();
-	TransformComponent* tc = mario->GetComponent<TransformComponent>();
-	MaterialComponent* matc = mario->GetComponent<MaterialComponent>();
+	Ref<ShaderComponent> sc = mario->GetComponent<ShaderComponent>();
+	Ref<MeshComponent> mc = mario->GetComponent<MeshComponent>();
+	Ref<TransformComponent> tc = mario->GetComponent<TransformComponent>();
+	Ref<MaterialComponent> matc = mario->GetComponent<MaterialComponent>();
 	
 	
 	glUseProgram(sc->GetProgram());

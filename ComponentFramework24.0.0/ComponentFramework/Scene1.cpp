@@ -36,7 +36,7 @@ bool Scene1::OnCreate() {
 	}
 
 
-	TransformComponent* btc = board->GetComponent<TransformComponent>();
+	Ref<TransformComponent> btc = board->GetComponent<TransformComponent>();
 
 
 	float i = 0.5f;
@@ -45,7 +45,7 @@ bool Scene1::OnCreate() {
 		if (!checker) { return false; }
 		checker->AddComponent<MeshComponent>(nullptr, "meshes/CheckerPiece.obj");
 		checker->AddComponent<ShaderComponent>(nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
-		checker->AddComponent<TransformComponent>(btc,btc->getOrientation(), btc->getPosition() + Vec3(-4.3,4.3,0) + Vec3(i * 2.48, j * -1.2,0 ), Vec3(0.1f, 0.1f, 0.1f));
+		checker->AddComponent<TransformComponent>(nullptr,btc->getOrientation(), btc->getPosition() + Vec3(-4.3,4.3,0) + Vec3(i * 2.48, j * -1.2,0 ), Vec3(0.1f, 0.1f, 0.1f));
 		checker->AddComponent<MaterialComponent>(nullptr, "textures/whiteCheckerPiece.png");
 		checker->OnCreate();
 		checker->ListComponents();
@@ -73,7 +73,7 @@ bool Scene1::OnCreate() {
 		if (!checker) { return false; }
 		checker->AddComponent<MeshComponent>(nullptr, "meshes/CheckerPiece.obj");
 		checker->AddComponent<ShaderComponent>(nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
-		checker->AddComponent<TransformComponent>(btc, Quaternion(), btc->getPosition() + Vec3(-4.3, 4.3, 0) + Vec3(i * 2.48, j * -1.2, 0), Vec3(0.1f, 0.1f, 0.1f));
+		checker->AddComponent<TransformComponent>(nullptr, Quaternion(), btc->getPosition() + Vec3(-4.3, 4.3, 0) + Vec3(i * 2.48, j * -1.2, 0), Vec3(0.1f, 0.1f, 0.1f));
 		checker->AddComponent<MaterialComponent>(nullptr, "textures/blackCheckerPiece.png");
 		checker->OnCreate();
 		checker->ListComponents();
@@ -161,10 +161,10 @@ void Scene1::Render() const {
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
-	ShaderComponent* sc = board->GetComponent<ShaderComponent>();
-	MeshComponent* mc = board->GetComponent<MeshComponent>();
-	TransformComponent* tc = board->GetComponent<TransformComponent>();
-	MaterialComponent* matc = board->GetComponent<MaterialComponent>();
+	Ref<ShaderComponent> sc = board->GetComponent<ShaderComponent>();
+	Ref<MeshComponent> mc = board->GetComponent<MeshComponent>();
+	Ref<TransformComponent> tc = board->GetComponent<TransformComponent>();
+	Ref<MaterialComponent> matc = board->GetComponent<MaterialComponent>();
 
 
 	glUseProgram(sc->GetProgram());
