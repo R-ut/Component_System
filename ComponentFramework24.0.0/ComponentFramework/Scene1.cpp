@@ -7,7 +7,7 @@
 #include "Body.h"
 #include <Quaternion.h>
 #include <QMath.h>
-
+//Add a camera class, make it the parent of the scene and child everything below it 
 Scene1::Scene1() : shader{ nullptr }, mesh{ nullptr },
 drawInWireMode{ false } {
 	Debug::Info("Created Scene1: ", __FILE__, __LINE__);
@@ -19,6 +19,9 @@ Scene1::~Scene1() {
 
 bool Scene1::OnCreate() {
 	Debug::Info("Loading assets Scene1: ", __FILE__, __LINE__);
+
+
+	camera = std::make_shared<CameraActor>(nullptr);
 
 	projectionMatrix = MMath::perspective(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
 	viewMatrix = MMath::lookAt(Vec3(0.0f, 0.0f,14.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
@@ -186,8 +189,9 @@ void Scene1::Render() const {
 		glBindTexture(GL_TEXTURE_2D, checker->GetComponent<MaterialComponent>()->getMaterialID());
 		checker->GetComponent<MeshComponent>()->Render(GL_TRIANGLES);
 		glBindTexture(GL_TEXTURE_2D, 0);
+		
 	}
-		glUseProgram(0);
+	glUseProgram(0);
 }
 
 

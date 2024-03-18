@@ -8,6 +8,8 @@
 #include "TransformComponent.h"
 #include "MaterialComponent.h"
 #include "ShaderComponent.h"
+#include "UBO_Padding.h"
+#include "CameraActor.h"
 using namespace MATH;
 
 /// Forward declarations 
@@ -24,6 +26,7 @@ private:
 	Matrix4 viewMatrix;
 	Matrix4 modelMatrix;
 	bool drawInWireMode;
+	Ref<CameraActor> camera;
 	Actor* board;
 	Actor* checker;
 	std::vector<Actor*> whiteCheckers;

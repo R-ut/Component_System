@@ -29,7 +29,7 @@ Matrix4 Actor::GetModelMatrix() const
 {
 	Matrix4 modelMatrix;
 	Ref<TransformComponent> tc = GetComponent<TransformComponent>();
-	if (tc != nullptr) {
+	if (tc.get() != nullptr) {
 		modelMatrix = tc->getModelmatrix();
 		return modelMatrix;
 	}
@@ -52,7 +52,6 @@ void Actor::ListComponents() const {
 
 
 void Actor::RemoveAllComponents() {
-	RemoveAllComponents();
 	components.clear();
 }
 
