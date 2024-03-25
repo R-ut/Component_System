@@ -8,7 +8,7 @@
 #include <Quaternion.h>
 #include <QMath.h>
 //Add a camera class, make it the parent of the scene and child everything below it 
-Scene1::Scene1() : shader{ nullptr }, mesh{ nullptr },
+Scene1::Scene1() : camera{nullptr}, shader { nullptr }, mesh{ nullptr },
 drawInWireMode{ false } {
 	Debug::Info("Created Scene1: ", __FILE__, __LINE__);
 }
@@ -25,7 +25,7 @@ bool Scene1::OnCreate() {
 
 	projectionMatrix = MMath::perspective(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
 	viewMatrix = MMath::lookAt(Vec3(0.0f, 0.0f,14.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
-	board = new Actor(nullptr);
+	board = std::make_shared<Actor>(nullptr);
 	if (!board) { return false;}
 	board->AddComponent<MeshComponent>(nullptr, "meshes/Plane.obj");
 	board->AddComponent<ShaderComponent>(nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
@@ -35,7 +35,7 @@ bool Scene1::OnCreate() {
 	board->ListComponents();
 	modelMatrix.loadIdentity();
 	for (int i = 0; i < 12; i++) {
-		whiteCheckers.push_back(new Actor(board));
+		whiteCheckers.push_back(std::make_shared<Actor>(board));
 	}
 
 
@@ -68,7 +68,7 @@ bool Scene1::OnCreate() {
 
 
 	for (int i = 0; i < 12; i++) {
-		blackCheckers.push_back(new Actor(board));
+		blackCheckers.push_back(std::make_shared<Actor>(board));
 	}
 	 i = 0;
 	 j = 5;

@@ -5,7 +5,7 @@
 #include "TransformComponent.h"
 #include "UBO_Padding.h"
 using namespace MATH;
-CameraActor::CameraActor(Component* parent_) :Actor(parent_), uboMatriciesID(0) {
+CameraActor::CameraActor(Ref < Component> parent_) :Actor(parent_), uboMatriciesID(0) {
 	bindingPoint = 0;
 }
 

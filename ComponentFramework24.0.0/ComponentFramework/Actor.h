@@ -15,7 +15,7 @@ private:
 	std::vector<Ref<Component>> components;
 
 public:
-	Actor(Component* parent_);
+	Actor(Ref<Component> parent_);
 	~Actor();
 	virtual bool OnCreate() override;
 	virtual void OnDestroy() override;

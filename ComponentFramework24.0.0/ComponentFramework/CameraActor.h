@@ -14,7 +14,7 @@ private:
 	unsigned int uboMatriciesID;
 	unsigned int bindingPoint;
 public:
-	CameraActor(Component* parent_);
+	CameraActor(Ref<Component> parent_);
 	~CameraActor();
 	virtual bool OnCreate() override;
 	virtual void OnDestroy() override;

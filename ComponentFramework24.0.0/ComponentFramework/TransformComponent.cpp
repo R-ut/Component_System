@@ -1,5 +1,5 @@
 #include "TransformComponent.h"
-TransformComponent::TransformComponent(Component* parent_ ,Quaternion orientation_, Vec3 position_,
+TransformComponent::TransformComponent(Ref<Component> parent_ ,Quaternion orientation_, Vec3 position_,
 	Vec3 scale_ )
 	:Component(parent_),orientation(orientation_), position(position_),scale(scale_) {
 	/*position = Vec3(0.0f, 0.0f, 0.0f);

@@ -26,7 +26,7 @@ private:
 
 
 public:
-	ShaderComponent(Component* parent_, const char* vsFilename_, const char* fsFilename_);
+	ShaderComponent(Ref<Component> parent_, const char* vsFilename_, const char* fsFilename_);
 	~ShaderComponent();
 	inline GLuint GetProgram() const { return shaderID; }
 	GLuint GetUniformID(std::string name);

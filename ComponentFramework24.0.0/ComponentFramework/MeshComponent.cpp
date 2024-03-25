@@ -5,7 +5,7 @@ using namespace MATH;
 #define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj_loader.h"
 
-MeshComponent::MeshComponent(Component* parent_, const char* filename_) : Component(parent_) {
+MeshComponent::MeshComponent(Ref<Component> parent_, const char* filename_) : Component(parent_) {
     filename = filename_;
 }
 MeshComponent::~MeshComponent() {}

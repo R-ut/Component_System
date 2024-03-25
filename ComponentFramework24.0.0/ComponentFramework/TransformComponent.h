@@ -17,7 +17,7 @@ private:
 	Vec3 position;
 	Vec3 scale;
 public:
-	TransformComponent(Component* parent_, Quaternion orientation_, Vec3 position_, Vec3 scale_ = Vec3(1.0f, 1.0f, 1.0f));
+	TransformComponent(Ref<Component> parent_, Quaternion orientation_, Vec3 position_, Vec3 scale_ = Vec3(1.0f, 1.0f, 1.0f));
 	~TransformComponent();
 	virtual bool OnCreate() override;
 	virtual void OnDestroy() override;

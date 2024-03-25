@@ -17,20 +17,24 @@ union SDL_Event;
 class Body;
 class Mesh;
 class Shader;
+class CameraActor;
+class Actor;
+class LightActor;
 
 class Scene1 : public Scene {
 private:
-	Shader* shader;
-	Mesh* mesh;
 	Matrix4 projectionMatrix;
 	Matrix4 viewMatrix;
 	Matrix4 modelMatrix;
 	bool drawInWireMode;
 	Ref<CameraActor> camera;
-	Actor* board;
-	Actor* checker;
-	std::vector<Actor*> whiteCheckers;
-	std::vector<Actor*> blackCheckers;
+	Ref<LightActor> light;
+	Ref<Shader> shader;
+	Ref<Mesh> mesh;
+	Ref<Actor> board;
+	Ref<Actor> checker;
+	std::vector<Ref<Actor>> whiteCheckers;
+	std::vector<Ref<Actor>> blackCheckers;
 public:
 	explicit Scene1();
 	virtual ~Scene1();

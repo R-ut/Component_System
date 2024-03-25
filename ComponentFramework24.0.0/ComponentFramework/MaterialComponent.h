@@ -6,7 +6,7 @@ private:
 	GLuint textureID;
 	const char* filename;
 public:
-	MaterialComponent(Component* parent_,const char* filename_);
+	MaterialComponent(Ref<Component> parent_,const char* filename_);
 	virtual ~MaterialComponent();
 	virtual bool OnCreate();
 	virtual void OnDestroy();

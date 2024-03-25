@@ -1,11 +1,11 @@
 #include "Actor.h"
 
-Actor::Actor(Component* parent_) :Component(parent_) {}
+Actor::Actor(Ref<Component> parent_) :Component(parent_) {}
 
 Actor::~Actor() {}
 
 bool Actor::OnCreate() {
-	for (auto component : components) {
+	for (Ref<Component> component : components) {
 		bool status = component->OnCreate();
 		if (status == false) {
 			return false;
@@ -37,7 +37,7 @@ Matrix4 Actor::GetModelMatrix() const
 		modelMatrix.loadIdentity();
 	}
 	if (parent) {
-		modelMatrix = dynamic_cast<Actor*>(parent)->GetModelMatrix() * modelMatrix;
+		modelMatrix = std::dynamic_pointer_cast<Actor>(parent)->GetModelMatrix() * modelMatrix;
 	}
 	return modelMatrix;
 }
@@ -45,7 +45,7 @@ Matrix4 Actor::GetModelMatrix() const
 void Actor::ListComponents() const {
 	/// typeid is a RTTI operator
 	std::cout << typeid(*this).name() << " contain the following components:\n";
-	for (auto component : components) {
+	for (Ref<Component> component : components) {
 		std::cout << typeid(*component).name() << std::endl;
 	}
 }
