@@ -1,5 +1,5 @@
-#ifndef SCENE1_H
-#define SCENE1_H
+#ifndef SCENE2_H
+#define SCENE2_H
 #include "Scene.h"
 #include <Vector.h>
 #include <Matrix.h>
@@ -23,7 +23,7 @@ class Actor;
 class LightActor;
 class AssetManager;
 
-class Scene1 : public Scene {
+class Scene2 : public Scene {
 private:
 	Matrix4 projectionMatrix;
 	Matrix4 viewMatrix;
@@ -39,8 +39,8 @@ private:
 	std::vector<Ref<Actor>> whiteCheckers;
 	std::vector<Ref<Actor>> blackCheckers;
 public:
-	explicit Scene1();
-	virtual ~Scene1();
+	explicit Scene2();
+	virtual ~Scene2();
 
 	virtual bool OnCreate() override;
 	virtual void OnDestroy() override;
@@ -50,4 +50,4 @@ public:
 };
 
 
-#endif // SCENE1_H
+#endif // Scene2_H
