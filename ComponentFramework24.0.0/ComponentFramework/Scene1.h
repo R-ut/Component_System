@@ -10,6 +10,7 @@
 #include "ShaderComponent.h"
 #include "UBO_Padding.h"
 #include "CameraActor.h"
+#include "AssetManager.h"
 using namespace MATH;
 
 /// Forward declarations 
@@ -20,6 +21,7 @@ class Shader;
 class CameraActor;
 class Actor;
 class LightActor;
+class AssetManager;
 
 class Scene1 : public Scene {
 private:
@@ -28,7 +30,8 @@ private:
 	Matrix4 modelMatrix;
 	bool drawInWireMode;
 	Ref<CameraActor> camera;
-	Ref<LightActor> light;
+	/*Ref<LightActor> light;*/
+	AssetManager* assetManager;
 	Ref<Shader> shader;
 	Ref<Mesh> mesh;
 	Ref<Actor> board;

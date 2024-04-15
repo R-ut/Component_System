@@ -20,9 +20,8 @@ Scene1::~Scene1() {
 bool Scene1::OnCreate() {
 	Debug::Info("Loading assets Scene1: ", __FILE__, __LINE__);
 
-
 	camera = std::make_shared<CameraActor>(nullptr);
-
+	
 	projectionMatrix = MMath::perspective(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
 	viewMatrix = MMath::lookAt(Vec3(0.0f, 0.0f,14.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
 	board = std::make_shared<Actor>(nullptr);
@@ -34,6 +33,7 @@ bool Scene1::OnCreate() {
 	board->OnCreate();
 	board->ListComponents();
 	modelMatrix.loadIdentity();
+
 	for (int i = 0; i < 12; i++) {
 		whiteCheckers.push_back(std::make_shared<Actor>(board));
 	}
@@ -48,7 +48,7 @@ bool Scene1::OnCreate() {
 		if (!checker) { return false; }
 		checker->AddComponent<MeshComponent>(nullptr, "meshes/CheckerPiece.obj");
 		checker->AddComponent<ShaderComponent>(nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
-		checker->AddComponent<TransformComponent>(nullptr,btc->getOrientation(), btc->getPosition() + Vec3(-4.3,4.3,0) + Vec3(i * 2.48, j * -1.2,0 ), Vec3(0.1f, 0.1f, 0.1f));
+		checker->AddComponent<TransformComponent>(btc,btc->getOrientation(), btc->getPosition() + Vec3(-4.3,4.3,0) + Vec3(i * 2.48, j * -1.2,0 ), Vec3(0.1f, 0.1f, 0.1f));
 		checker->AddComponent<MaterialComponent>(nullptr, "textures/whiteCheckerPiece.png");
 		checker->OnCreate();
 		checker->ListComponents();
