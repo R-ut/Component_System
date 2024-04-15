@@ -20,24 +20,20 @@ Scene2::~Scene2() {
 bool Scene2::OnCreate() {
 	Debug::Info("Loading assets Scene2: ", __FILE__, __LINE__);
 
-	camera = std::make_shared<CameraActor>(nullptr);
-	
+	modelMatrix.loadIdentity();
 	projectionMatrix = MMath::perspective(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
-	viewMatrix = MMath::lookAt(Vec3(0.0f, 0.0f,14.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
+	viewMatrix = MMath::lookAt(Vec3(0.0f, 12.0f,8.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
 	board = std::make_shared<Actor>(nullptr);
+	assetManager.OnCreate();
+	
 	if (!board) { return false;}
-	board->AddComponent<MeshComponent>(nullptr, "meshes/Plane.obj");
-	board->AddComponent<ShaderComponent>(nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
 	board->AddComponent<TransformComponent>(nullptr, QMath::angleAxisRotation(-0.0f, Vec3(1.0f, 0.0f, 0.0f)), Vec3(0,0,0));//-7.8f works the best
-	board->AddComponent<MaterialComponent>(nullptr, "textures/8x8_checkered_board.png");
 	board->OnCreate();
 	board->ListComponents();
-	modelMatrix.loadIdentity();
 
-	for (int i = 0; i < 12; i++) {
+	for (int i = 0; i < 16; i++) {
 		whiteCheckers.push_back(std::make_shared<Actor>(board));
 	}
-
 
 	Ref<TransformComponent> btc = board->GetComponent<TransformComponent>();
 
@@ -46,47 +42,34 @@ bool Scene2::OnCreate() {
 	float j = 0;
 	for (auto checker : whiteCheckers) {
 		if (!checker) { return false; }
-		checker->AddComponent<MeshComponent>(nullptr, "meshes/CheckerPiece.obj");
-		checker->AddComponent<ShaderComponent>(nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
-		checker->AddComponent<TransformComponent>(btc,btc->getOrientation(), btc->getPosition() + Vec3(-4.3,4.3,0) + Vec3(i * 2.48, j * -1.2,0 ), Vec3(0.1f, 0.1f, 0.1f));
-		checker->AddComponent<MaterialComponent>(nullptr, "textures/blackCheckerPiece.png");
+		checker->AddComponent<TransformComponent>(btc,btc->getOrientation() * QMath::angleAxisRotation(90.0f, Vec3(1.0f, 0.0f, 0.0f)), btc->getPosition() + Vec3(-4.95,4.3,0) + Vec3(i * 1.24, j * -1.2,0 ), Vec3(0.1f, 0.1f, 0.1f));
 		checker->OnCreate();
 		checker->ListComponents();
 		//-2.5,2.55,0
 		//-0.5,1.9,0
 		i++;
-		std::cout << i << std::endl;
-		if (int(i) % 4 == 0 && i != 0) {
+		if (int(i) % 8 == 0 && i != 0) {
 			j++;
-			if (int(j) % 2 != 0 && i != 0) {
-				i = 0;
-			}
-			else { i = 0.5f; }
+			i = 0.5f;
 		}
 	}
 
 
 
-	for (int i = 0; i < 12; i++) {
+	for (int i = 0; i < 16; i++) {
 		blackCheckers.push_back(std::make_shared<Actor>(board));
 	}
 	 i = 0;
 	 j = 5;
 	for (auto checker : blackCheckers) {
 		if (!checker) { return false; }
-		checker->AddComponent<MeshComponent>(nullptr, "meshes/CheckerPiece.obj");
-		checker->AddComponent<ShaderComponent>(nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
-		checker->AddComponent<TransformComponent>(nullptr, Quaternion(), btc->getPosition() + Vec3(-4.3, 4.3, 0) + Vec3(i * 2.48, j * -1.2, 0), Vec3(0.1f, 0.1f, 0.1f));
-		checker->AddComponent<MaterialComponent>(nullptr, "textures/blackCheckerPiece.png");
+		checker->AddComponent<TransformComponent>(nullptr, Quaternion(), btc->getPosition() + Vec3(-4.3, 2.88, 0) + Vec3(i * 1.24, j * -1.2, 0), Vec3(0.1f, 0.1f, 0.1f));
 		checker->OnCreate();
 		checker->ListComponents();
 		i++;
-		if (int(i) % 4 == 0 && i != 0) {
+		if (int(i) % 8 == 0 && i != 0) {
 			j++;
-			if (int(j) % 2 != 0 && i != 0) {
-				i = 0;
-			}
-			else { i = 0.5f; }
+			i = 0;
 		}
 	}
 	//create 2 vectors one for red checker and other for black
@@ -136,25 +119,25 @@ void Scene2::HandleEvents(const SDL_Event& sdlEvent) {
 }
 
 void Scene2::Update(const float deltaTime) {
-	static float angle_1;
-	static float angle_2;
-	angle_1 += -45.0f * deltaTime;
-	angle_2 += 60.0f * deltaTime;
-	Quaternion q = board->GetComponent<TransformComponent>()->getOrientation();
-	Quaternion rotate_1 = QMath::angleAxisRotation(angle_1, Vec3(1.0f, 0.0f, 1.0f));
-	Quaternion rotate_2 = QMath::angleAxisRotation(angle_2, Vec3(0.0f, 1.0f, 1.0f));
+	//static float angle_1;
+	//static float angle_2;
+	//angle_1 += -45.0f * deltaTime;
+	//angle_2 += 60.0f * deltaTime;
+	//Quaternion q = board->GetComponent<TransformComponent>()->getOrientation();
+	//Quaternion rotate_1 = QMath::angleAxisRotation(angle_1, Vec3(1.0f, 0.0f, 1.0f));
+	//Quaternion rotate_2 = QMath::angleAxisRotation(angle_2, Vec3(0.0f, 1.0f, 1.0f));
 
-	// Adding slerp and making the movement smoother
-	float slerpValue = 0.5f;
-	Quaternion slerp = QMath::slerp(rotate_1, rotate_2, slerpValue);
-	board->GetComponent<TransformComponent>()->SetOrientation(slerp);
+	//// Adding slerp and making the movement smoother
+	//float slerpValue = 0.5f;
+	//Quaternion slerp = QMath::slerp(rotate_1, rotate_2, slerpValue);
+	//board->GetComponent<TransformComponent>()->SetOrientation(slerp);
 }
 
 void Scene2::Render() const {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	/// Set the background color then clear the screen
-	glClearColor(0.19f,	0.56f,	0.53f, 0.0f);
+	glClearColor(0.19f, 0.56f, 0.53f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	if (drawInWireMode) {
@@ -164,36 +147,44 @@ void Scene2::Render() const {
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
-	Ref<ShaderComponent> sc = board->GetComponent<ShaderComponent>();
-	Ref<MeshComponent> mc = board->GetComponent<MeshComponent>();
-	Ref<TransformComponent> tc = board->GetComponent<TransformComponent>();
-	Ref<MaterialComponent> matc = board->GetComponent<MaterialComponent>();
+	Ref<ShaderComponent> sc = assetManager.GetComponent<ShaderComponent>("TextureShader");
+	Ref<MeshComponent> bmc = assetManager.GetComponent<MeshComponent>("BoardMesh");
+	Ref<MaterialComponent> bmac = assetManager.GetComponent<MaterialComponent>("BoardMaterial");
+	Ref<TransformComponent> btc = board->GetComponent<TransformComponent>();
+	Ref<MaterialComponent> cwmc = assetManager.GetComponent<MaterialComponent>("WhiteCheckerMaterial");
+	Ref<MaterialComponent> cbmc = assetManager.GetComponent<MaterialComponent>("BlackCheckerMaterial");
+	Ref<MeshComponent> Bishop = assetManager.GetComponent<MeshComponent>("Bishop");
+	Ref<MeshComponent> King = assetManager.GetComponent<MeshComponent>("King");
+	Ref<MeshComponent> Knight = assetManager.GetComponent<MeshComponent>("Knight");
+	Ref<MeshComponent> Rook = assetManager.GetComponent<MeshComponent>("Rook");
+	Ref<MeshComponent>Queen = assetManager.GetComponent<MeshComponent>("Queen");
+	Ref<MeshComponent> Pawn = assetManager.GetComponent<MeshComponent>("Pawn");
 
 
 	glUseProgram(sc->GetProgram());
 	glUniformMatrix4fv(sc->GetUniformID("projectionMatrix"), 1, GL_FALSE, projectionMatrix);
 	glUniformMatrix4fv(sc->GetUniformID("viewMatrix"), 1, GL_FALSE, viewMatrix);
-	glUniformMatrix4fv(sc->GetUniformID("modelMatrix"), 1, GL_FALSE, tc->getModelmatrix());
-	glBindTexture(GL_TEXTURE_2D, matc->getMaterialID());
-	mc->Render(GL_TRIANGLES);
+	glUniformMatrix4fv(sc->GetUniformID("modelMatrix"), 1, GL_FALSE, btc->getModelmatrix());
+	glBindTexture(GL_TEXTURE_2D, bmac->getMaterialID());
+	bmc->Render(GL_TRIANGLES);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	for (auto checker : whiteCheckers) {
-		glUniformMatrix4fv(checker->GetComponent<ShaderComponent>()->GetUniformID("modelMatrix"), 1, GL_FALSE,  tc->getModelmatrix()* checker->GetComponent<TransformComponent>()->getModelmatrix());
-		glBindTexture(GL_TEXTURE_2D, checker->GetComponent<MaterialComponent>()->getMaterialID());
-		checker->GetComponent<MeshComponent>()->Render(GL_TRIANGLES);
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-	for (auto checker : blackCheckers) {
-		glUniformMatrix4fv(checker->GetComponent<ShaderComponent>()->GetUniformID("modelMatrix"), 1, GL_FALSE, tc->getModelmatrix() * checker->GetComponent<TransformComponent>()->getModelmatrix());
-		glBindTexture(GL_TEXTURE_2D, checker->GetComponent<MaterialComponent>()->getMaterialID());
-		checker->GetComponent<MeshComponent>()->Render(GL_TRIANGLES);
-		glBindTexture(GL_TEXTURE_2D, 0);
-		
-	}
-	glUseProgram(0);
-}
+	for (const auto& checker : whiteCheckers) {
+			// Assume 'checker' is a specific piece instance with a TransformComponent
+			glUniformMatrix4fv(sc->GetUniformID("modelMatrix"), 1, GL_FALSE, (btc->getModelmatrix() * checker->GetComponent<TransformComponent>()->getModelmatrix()));
+			glBindTexture(GL_TEXTURE_2D, cwmc->getMaterialID());
+			Bishop->Render(GL_TRIANGLES);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
+		for (auto checker : blackCheckers) {
+			glUniformMatrix4fv(sc->GetUniformID("modelMatrix"), 1, GL_FALSE, btc->getModelmatrix() * checker->GetComponent<TransformComponent>()->getModelmatrix());
+			glBindTexture(GL_TEXTURE_2D, cbmc->getMaterialID());
+			//cmc->Render(GL_TRIANGLES);
+			glBindTexture(GL_TEXTURE_2D, 0);
 
+		}
+		glUseProgram(0);
+	}
 
 
 

@@ -31,7 +31,7 @@ private:
 	bool drawInWireMode;
 	Ref<CameraActor> camera;
 	/*Ref<LightActor> light;*/
-	/*AssetManager* assetManager;*/
+	AssetManager assetManager;
 	Ref<Shader> shader;
 	Ref<Mesh> mesh;
 	Ref<Actor> board;

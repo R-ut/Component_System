@@ -1,179 +1,22 @@
-Mon Apr 15 02:50:46 2024
+Mon Apr 15 15:51:44 2024
 [INFO]: Starting the SceneManager
 [INFO]: OpenGL version: 4.6.0 - Build 31.0.101.4255
 [INFO]: Graphics card vendor Intel
 [INFO]: Graphics card name Intel(R) UHD Graphics
 [INFO]: GLSL Version 4.60 - Build 31.0.101.4255
+[ERROR]: No such component name in file: C:\Users\Rutza\Desktop\Humber Sem 4\Game engine 4\ComponentFramework24.0.0\engine42024\ComponentFramework24.0.0\ComponentFramework\AssetManager.h on line: 34
+[ERROR]: No such component name in file: C:\Users\Rutza\Desktop\Humber Sem 4\Game engine 4\ComponentFramework24.0.0\engine42024\ComponentFramework24.0.0\ComponentFramework\AssetManager.h on line: 34
+[ERROR]: No such component name in file: C:\Users\Rutza\Desktop\Humber Sem 4\Game engine 4\ComponentFramework24.0.0\engine42024\ComponentFramework24.0.0\ComponentFramework\AssetManager.h on line: 34
+[ERROR]: No such component name in file: C:\Users\Rutza\Desktop\Humber Sem 4\Game engine 4\ComponentFramework24.0.0\engine42024\ComponentFramework24.0.0\ComponentFramework\AssetManager.h on line: 34
+[ERROR]: No such component name in file: C:\Users\Rutza\Desktop\Humber Sem 4\Game engine 4\ComponentFramework24.0.0\engine42024\ComponentFramework24.0.0\ComponentFramework\AssetManager.h on line: 34
+[ERROR]: No such component name in file: C:\Users\Rutza\Desktop\Humber Sem 4\Game engine 4\ComponentFramework24.0.0\engine42024\ComponentFramework24.0.0\ComponentFramework\AssetManager.h on line: 34
+[ERROR]: No such component name in file: C:\Users\Rutza\Desktop\Humber Sem 4\Game engine 4\ComponentFramework24.0.0\engine42024\ComponentFramework24.0.0\ComponentFramework\AssetManager.h on line: 34
+[ERROR]: No such component name in file: C:\Users\Rutza\Desktop\Humber Sem 4\Game engine 4\ComponentFramework24.0.0\engine42024\ComponentFramework24.0.0\ComponentFramework\AssetManager.h on line: 34
+[ERROR]: No such component name in file: C:\Users\Rutza\Desktop\Humber Sem 4\Game engine 4\ComponentFramework24.0.0\engine42024\ComponentFramework24.0.0\ComponentFramework\AssetManager.h on line: 34
+[ERROR]: No such component name in file: C:\Users\Rutza\Desktop\Humber Sem 4\Game engine 4\ComponentFramework24.0.0\engine42024\ComponentFramework24.0.0\ComponentFramework\AssetManager.h on line: 34
+[ERROR]: No such component name in file: C:\Users\Rutza\Desktop\Humber Sem 4\Game engine 4\ComponentFramework24.0.0\engine42024\ComponentFramework24.0.0\ComponentFramework\AssetManager.h on line: 34
 [INFO]: Created Scene2: 
 [INFO]: Loading assets Scene2: 
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
-[INFO]: Uniforms:
-"lightPos" loc:3
-"modelMatrix" loc:2
-"projectionMatrix" loc:0
-"viewMatrix" loc:1
-"myTexture" loc:4
-
 [INFO]: Uniforms:
 "lightPos" loc:3
 "modelMatrix" loc:2

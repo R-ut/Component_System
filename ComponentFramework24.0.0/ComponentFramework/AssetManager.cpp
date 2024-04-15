@@ -3,13 +3,19 @@
 #include "ShaderComponent.h"
 #include "MaterialComponent.h"
 #include "MeshComponent.h"
+#include "TransformComponent.h"
 AssetManager::AssetManager() {
 	AddComponent<ShaderComponent>("TextureShader", nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
-	AddComponent<MeshComponent>("CheckerMesh", nullptr, "meshes/CheckerPiece.obj");
 	AddComponent<MeshComponent>("BoardMesh", nullptr, "meshes/Plane.obj");
+	AddComponent<MeshComponent>("Bishop", nullptr, "meshes/Bishop.obj");
+	AddComponent<MeshComponent>("Knight", nullptr, "meshes/Knight.obj");
+	AddComponent<MeshComponent>("Rook", nullptr, "meshes/Rook.obj");
+	AddComponent<MeshComponent>("Queen", nullptr, "meshes/Queen.obj");
+	AddComponent<MeshComponent>("King", nullptr, "meshes/King.obj");
+	AddComponent<MeshComponent>("Pawn", nullptr, "meshes/Pawn.obj");
 	AddComponent<MaterialComponent>("BoardMaterial", nullptr, "textures/8x8_checkered_board.png");
-	AddComponent<MaterialComponent>("WhiteCheckerMaterial", nullptr, "textures/whiteCheckerPiece.png");
-	AddComponent<MaterialComponent>("BlackCheckerMaterial", nullptr, "textures/blackCheckerPiece.png");
+	AddComponent<MaterialComponent>("WhiteCheckerMaterial", nullptr, "textures/White Chess Base Colour.png");
+	AddComponent<MaterialComponent>("BlackCheckerMaterial", nullptr, "textures/Black Chess Base Colour.png.png");
 }
 AssetManager::~AssetManager() {
 }
