@@ -30,21 +30,21 @@ bool Scene2::OnCreate() {
 	board->AddComponent<TransformComponent>(nullptr, QMath::angleAxisRotation(-0.0f, Vec3(1.0f, 0.0f, 0.0f)), Vec3(0,0,0));//-7.8f works the best
 	board->OnCreate();
 	board->ListComponents();
-
-	for (int i = 0; i < 16; i++) {
-		whiteCheckers.push_back(std::make_shared<Actor>(board));
-	}
-
 	Ref<TransformComponent> btc = board->GetComponent<TransformComponent>();
 
-
+	const std::vector<std::string> whitePieceOrder = { "Rook", "Knight", "Bishop", "Queen", "King", "Bishop1", "Knight1", "Rook1","Pawn1","Pawn2" ,"Pawn3" ,"Pawn4" ,"Pawn5" ,"Pawn6" ,"Pawn7" ,"Pawn8" };
+	
 	float i = 0.5f;
 	float j = 0;
-	for (auto checker : whiteCheckers) {
-		if (!checker) { return false; }
-		checker->AddComponent<TransformComponent>(btc,btc->getOrientation() * QMath::angleAxisRotation(90.0f, Vec3(1.0f, 0.0f, 0.0f)), btc->getPosition() + Vec3(-4.95,4.3,0) + Vec3(i * 1.24, j * -1.2,0 ), Vec3(0.1f, 0.1f, 0.1f));
-		checker->OnCreate();
-		checker->ListComponents();
+	for (const auto& pieceType : whitePieceOrder) {
+		auto piece = std::make_shared<Actor>(board);
+		
+		// Configure piece components
+		
+		if (!piece) { return false; }
+		piece->AddComponent<TransformComponent>(btc, btc->getOrientation() * QMath::angleAxisRotation(90.0f, Vec3(1.0f, 0.0f, 0.0f)), btc->getPosition() + Vec3(-4.95, 4.3, 0) + Vec3(i * 1.24, j * -1.2, 0), Vec3(0.1f, 0.1f, 0.1f));
+		piece->OnCreate();
+		piece->ListComponents();
 		//-2.5,2.55,0
 		//-0.5,1.9,0
 		i++;
@@ -52,25 +52,28 @@ bool Scene2::OnCreate() {
 			j++;
 			i = 0.5f;
 		}
+		whiteChessPieces[pieceType] = piece;
 	}
+	const std::vector<std::string> blackPieceOrder = { "Pawn1","Pawn2" ,"Pawn3" ,"Pawn4" ,"Pawn5" ,"Pawn6" ,"Pawn7" ,"Pawn8" ,"Rook", "Knight", "Bishop",  "King","Queen", "Bishop1", "Knight1", "Rook1" };
+	i = 0;
+	j = 5;
+	for (const auto& pieceType : blackPieceOrder) {
+		auto piece = std::make_shared<Actor>(board);
 
+		// Configure piece components
 
-
-	for (int i = 0; i < 16; i++) {
-		blackCheckers.push_back(std::make_shared<Actor>(board));
-	}
-	 i = 0;
-	 j = 5;
-	for (auto checker : blackCheckers) {
-		if (!checker) { return false; }
-		checker->AddComponent<TransformComponent>(nullptr, Quaternion(), btc->getPosition() + Vec3(-4.3, 2.88, 0) + Vec3(i * 1.24, j * -1.2, 0), Vec3(0.1f, 0.1f, 0.1f));
-		checker->OnCreate();
-		checker->ListComponents();
+		if (!piece) { return false; }
+		piece->AddComponent<TransformComponent>(btc, btc->getOrientation() * QMath::angleAxisRotation(90.0f, Vec3(1.0f, 0.0f, 0.0f)), btc->getPosition() + Vec3(-4.3, 2.88, 0) + Vec3(i * 1.24, j * -1.2, 0), Vec3(0.1f, 0.1f, 0.1f));
+		piece->OnCreate();
+		piece->ListComponents();
+		//-2.5,2.55,0
+		//-0.5,1.9,0
 		i++;
 		if (int(i) % 8 == 0 && i != 0) {
 			j++;
 			i = 0;
 		}
+		blackChessPieces[pieceType] = piece;
 	}
 	//create 2 vectors one for red checker and other for black
 	// each vector will have 12 pieces in total ,  1.2 is the difference between two consecutive black squares
@@ -84,13 +87,13 @@ void Scene2::OnDestroy() {
 	Debug::Info("Deleting assets Scene2: ", __FILE__, __LINE__);
 	board->RemoveAllComponents();
 	board->OnDestroy();
-	for (auto checker : whiteCheckers) {
-		checker->RemoveAllComponents();
-		checker->OnDestroy();
+	for (auto checker : whiteChessPieces) {
+		checker.second->RemoveAllComponents();
+		checker.second->OnDestroy();
 	}
-	for (auto checker :blackCheckers) {
-		checker->RemoveAllComponents();
-		checker->OnDestroy();
+	for (auto checker : blackChessPieces) {
+		checker.second->RemoveAllComponents();
+		checker.second->OnDestroy();
 	}
 }
 
@@ -119,18 +122,18 @@ void Scene2::HandleEvents(const SDL_Event& sdlEvent) {
 }
 
 void Scene2::Update(const float deltaTime) {
-	//static float angle_1;
-	//static float angle_2;
-	//angle_1 += -45.0f * deltaTime;
-	//angle_2 += 60.0f * deltaTime;
-	//Quaternion q = board->GetComponent<TransformComponent>()->getOrientation();
-	//Quaternion rotate_1 = QMath::angleAxisRotation(angle_1, Vec3(1.0f, 0.0f, 1.0f));
-	//Quaternion rotate_2 = QMath::angleAxisRotation(angle_2, Vec3(0.0f, 1.0f, 1.0f));
+	static float angle_1;
+	static float angle_2;
+	angle_1 += -45.0f * deltaTime;
+	angle_2 += 60.0f * deltaTime;
+	Quaternion q = board->GetComponent<TransformComponent>()->getOrientation();
+	Quaternion rotate_1 = QMath::angleAxisRotation(angle_1, Vec3(1.0f, 0.0f, 1.0f));
+	Quaternion rotate_2 = QMath::angleAxisRotation(angle_2, Vec3(0.0f, 1.0f, 1.0f));
 
-	//// Adding slerp and making the movement smoother
-	//float slerpValue = 0.5f;
-	//Quaternion slerp = QMath::slerp(rotate_1, rotate_2, slerpValue);
-	//board->GetComponent<TransformComponent>()->SetOrientation(slerp);
+	// Adding slerp and making the movement smoother
+	float slerpValue = 0.5f;
+	Quaternion slerp = QMath::slerp(rotate_1, rotate_2, slerpValue);
+	board->GetComponent<TransformComponent>()->SetOrientation(slerp);
 }
 
 void Scene2::Render() const {
@@ -169,20 +172,64 @@ void Scene2::Render() const {
 	bmc->Render(GL_TRIANGLES);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	for (const auto& checker : whiteCheckers) {
-			// Assume 'checker' is a specific piece instance with a TransformComponent
-			glUniformMatrix4fv(sc->GetUniformID("modelMatrix"), 1, GL_FALSE, (btc->getModelmatrix() * checker->GetComponent<TransformComponent>()->getModelmatrix()));
-			glBindTexture(GL_TEXTURE_2D, cwmc->getMaterialID());
+	for (const auto& checker : whiteChessPieces) {
+		glUniformMatrix4fv(sc->GetUniformID("modelMatrix"), 1, GL_FALSE, (btc->getModelmatrix() * checker.second->GetComponent<TransformComponent>()->getModelmatrix()));
+		glBindTexture(GL_TEXTURE_2D, cwmc->getMaterialID());
+		
+		if (checker.first.find("Rook") != std::string::npos) {
+			Rook->Render(GL_TRIANGLES);
+			
+		}
+		if (checker.first.find("Bishop")!=std::string::npos) {
 			Bishop->Render(GL_TRIANGLES);
+			
+		}
+		if (checker.first.find("Queen") != std::string::npos) {
+			Queen->Render(GL_TRIANGLES);
+			
+		}
+		if (checker.first.find("King") != std::string::npos) {
+			King->Render(GL_TRIANGLES);
+		}
+	    if (checker.first.find("Pawn") != std::string::npos) {
+			Pawn->Render(GL_TRIANGLES);
+		}
+		if (checker.first.find("Knight") != std::string::npos) {
+			Knight->Render(GL_TRIANGLES);
+		}
+			// Assume 'checker' is a specific piece instance with a TransformComponent
+			
+			
 			glBindTexture(GL_TEXTURE_2D, 0);
 		}
-		for (auto checker : blackCheckers) {
-			glUniformMatrix4fv(sc->GetUniformID("modelMatrix"), 1, GL_FALSE, btc->getModelmatrix() * checker->GetComponent<TransformComponent>()->getModelmatrix());
-			glBindTexture(GL_TEXTURE_2D, cbmc->getMaterialID());
-			//cmc->Render(GL_TRIANGLES);
-			glBindTexture(GL_TEXTURE_2D, 0);
+	for (const auto& checker : blackChessPieces) {
+		glUniformMatrix4fv(sc->GetUniformID("modelMatrix"), 1, GL_FALSE, (btc->getModelmatrix() * checker.second->GetComponent<TransformComponent>()->getModelmatrix()));
+		glBindTexture(GL_TEXTURE_2D, cbmc->getMaterialID());
+
+		if (checker.first.find("Rook") != std::string::npos) {
+			Rook->Render(GL_TRIANGLES);
 
 		}
+		if (checker.first.find("Bishop") != std::string::npos) {
+			Bishop->Render(GL_TRIANGLES);
+
+		}
+		if (checker.first.find("Queen") != std::string::npos) {
+			Queen->Render(GL_TRIANGLES);
+
+		}
+		if (checker.first.find("King") != std::string::npos) {
+			King->Render(GL_TRIANGLES);
+		}
+		if (checker.first.find("Pawn") != std::string::npos) {
+			Pawn->Render(GL_TRIANGLES);
+		}
+		if (checker.first.find("Knight") != std::string::npos) {
+			Knight->Render(GL_TRIANGLES);
+		}
+		// Assume 'checker' is a specific piece instance with a TransformComponent
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
 		glUseProgram(0);
 	}
 

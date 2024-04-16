@@ -36,8 +36,8 @@ private:
 	Ref<Mesh> mesh;
 	Ref<Actor> board;
 	Ref<Actor> checker;
-	std::vector<Ref<Actor>> whiteCheckers;
-	std::vector<Ref<Actor>> blackCheckers;
+	std::unordered_map<std::string, Ref<Actor>> whiteChessPieces;
+	std::unordered_map<std::string, Ref<Actor>> blackChessPieces;
 public:
 	explicit Scene2();
 	virtual ~Scene2();
