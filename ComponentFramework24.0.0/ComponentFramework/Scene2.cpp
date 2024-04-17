@@ -20,8 +20,6 @@ Scene2::~Scene2() {
 bool Scene2::OnCreate() {
 	Debug::Info("Loading assets Scene2: ", __FILE__, __LINE__);
 
-	camera = std::make_shared<CameraActor>(nullptr);
-	camera->OnCreate();
 	modelMatrix.loadIdentity();
 	projectionMatrix = MMath::perspective(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
 	viewMatrix = MMath::lookAt(Vec3(0.0f, 12.0f,8.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
@@ -31,9 +29,10 @@ bool Scene2::OnCreate() {
 	if (!board) { return false;}
 	board->AddComponent<TransformComponent>(nullptr, QMath::angleAxisRotation(-0.0f, Vec3(1.0f, 0.0f, 0.0f)), Vec3(0,0,0));//-7.8f works the best
 	board->AddComponent<MeshComponent>(assetManager.GetComponent<MeshComponent>("BoardMesh"));
-	actors.push_back(board);
+	
 	board->OnCreate();
 	board->ListComponents();
+	actors.push_back(board);
 	Ref<TransformComponent> btc = board->GetComponent<TransformComponent>();
 
 	const std::vector<std::string> whitePieceOrder = { "Rook", "Knight", "Bishop", "Queen", "King", "Bishop1", "Knight1", "Rook1","Pawn1","Pawn2" ,"Pawn3" ,"Pawn4" ,"Pawn5" ,"Pawn6" ,"Pawn7" ,"Pawn8" };
@@ -162,7 +161,7 @@ void Scene2::HandleEvents(const SDL_Event& sdlEvent) {
 		break;
 
 	case SDL_MOUSEBUTTONDOWN:
-			std::cout << Pick(sdlEvent.button.x, sdlEvent.button.y);
+			std::cout << Pick(sdlEvent.button.x, sdlEvent.button.y)<< std::endl;
 		break;
 
 	case SDL_MOUSEBUTTONUP:
@@ -179,8 +178,8 @@ int Scene2::Pick(int x, int y) {
 	
 	Ref<ShaderComponent> shader = assetManager.GetComponent<ShaderComponent>("ColorPickingShader");
 	glUseProgram(shader->GetProgram());
-	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
-	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());
+	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, projectionMatrix);
+	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, viewMatrix);
 	
 	
 	for (GLuint i = 0; i < actors.size(); i++) {
