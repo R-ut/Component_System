@@ -6,6 +6,7 @@
 #include "TransformComponent.h"
 AssetManager::AssetManager() {
 	AddComponent<ShaderComponent>("TextureShader", nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
+	AddComponent<ShaderComponent>("ColorPickingShader", nullptr, "shaders/colorPickingVert.glsl", "shaders/colorPickingFrag.glsl");
 	AddComponent<MeshComponent>("BoardMesh", nullptr, "meshes/Plane.obj");
 	AddComponent<MeshComponent>("Bishop", nullptr, "meshes/Bishop.obj");
 	AddComponent<MeshComponent>("Knight", nullptr, "meshes/Knight.obj");

@@ -20,6 +20,8 @@ Scene2::~Scene2() {
 bool Scene2::OnCreate() {
 	Debug::Info("Loading assets Scene2: ", __FILE__, __LINE__);
 
+	camera = std::make_shared<CameraActor>(nullptr);
+	camera->OnCreate();
 	modelMatrix.loadIdentity();
 	projectionMatrix = MMath::perspective(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
 	viewMatrix = MMath::lookAt(Vec3(0.0f, 12.0f,8.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
@@ -28,6 +30,8 @@ bool Scene2::OnCreate() {
 	
 	if (!board) { return false;}
 	board->AddComponent<TransformComponent>(nullptr, QMath::angleAxisRotation(-0.0f, Vec3(1.0f, 0.0f, 0.0f)), Vec3(0,0,0));//-7.8f works the best
+	board->AddComponent<MeshComponent>(assetManager.GetComponent<MeshComponent>("BoardMesh"));
+	actors.push_back(board);
 	board->OnCreate();
 	board->ListComponents();
 	Ref<TransformComponent> btc = board->GetComponent<TransformComponent>();
@@ -43,6 +47,7 @@ bool Scene2::OnCreate() {
 		
 		if (!piece) { return false; }
 		piece->AddComponent<TransformComponent>(btc, btc->getOrientation() * QMath::angleAxisRotation(90.0f, Vec3(1.0f, 0.0f, 0.0f)), btc->getPosition() + Vec3(-4.95, 4.3, 0) + Vec3(i * 1.24, j * -1.2, 0), Vec3(0.1f, 0.1f, 0.1f));
+		
 		piece->OnCreate();
 		piece->ListComponents();
 		//-2.5,2.55,0
@@ -52,6 +57,29 @@ bool Scene2::OnCreate() {
 			j++;
 			i = 0.5f;
 		}
+		
+		if (pieceType.find("Rook") != std::string::npos) {
+			piece->AddComponent<MeshComponent>(assetManager.GetComponent<MeshComponent>("Rook"));
+
+		}
+		if (pieceType.find("Bishop") != std::string::npos) {
+			piece->AddComponent<MeshComponent>(assetManager.GetComponent<MeshComponent>("Rook"));
+
+		}
+		if (pieceType.find("Queen") != std::string::npos) {
+			piece->AddComponent<MeshComponent>(assetManager.GetComponent<MeshComponent>("Rook"));
+
+		}
+		if (pieceType.find("King") != std::string::npos) {
+			piece->AddComponent<MeshComponent>(assetManager.GetComponent<MeshComponent>("Rook"));
+		}
+		if (pieceType.find("Pawn") != std::string::npos) {
+			piece->AddComponent<MeshComponent>(assetManager.GetComponent<MeshComponent>("Rook"));
+		}
+		if (pieceType.find("Knight") != std::string::npos) {
+			piece->AddComponent<MeshComponent>(assetManager.GetComponent<MeshComponent>("Rook"));
+		}
+		actors.push_back(piece);
 		whiteChessPieces[pieceType] = piece;
 	}
 	const std::vector<std::string> blackPieceOrder = { "Pawn1","Pawn2" ,"Pawn3" ,"Pawn4" ,"Pawn5" ,"Pawn6" ,"Pawn7" ,"Pawn8" ,"Rook", "Knight", "Bishop",  "King","Queen", "Bishop1", "Knight1", "Rook1" };
@@ -64,6 +92,7 @@ bool Scene2::OnCreate() {
 
 		if (!piece) { return false; }
 		piece->AddComponent<TransformComponent>(btc, btc->getOrientation() * QMath::angleAxisRotation(90.0f, Vec3(1.0f, 0.0f, 0.0f)), btc->getPosition() + Vec3(-4.3, 2.88, 0) + Vec3(i * 1.24, j * -1.2, 0), Vec3(0.1f, 0.1f, 0.1f));
+		
 		piece->OnCreate();
 		piece->ListComponents();
 		//-2.5,2.55,0
@@ -73,6 +102,28 @@ bool Scene2::OnCreate() {
 			j++;
 			i = 0;
 		}
+		if (pieceType.find("Rook") != std::string::npos) {
+			piece->AddComponent<MeshComponent>(assetManager.GetComponent<MeshComponent>("Rook"));
+
+		}
+		if (pieceType.find("Bishop") != std::string::npos) {
+			piece->AddComponent<MeshComponent>(assetManager.GetComponent<MeshComponent>("Rook"));
+
+		}
+		if (pieceType.find("Queen") != std::string::npos) {
+			piece->AddComponent<MeshComponent>(assetManager.GetComponent<MeshComponent>("Rook"));
+
+		}
+		if (pieceType.find("King") != std::string::npos) {
+			piece->AddComponent<MeshComponent>(assetManager.GetComponent<MeshComponent>("Rook"));
+		}
+		if (pieceType.find("Pawn") != std::string::npos) {
+			piece->AddComponent<MeshComponent>(assetManager.GetComponent<MeshComponent>("Rook"));
+		}
+		if (pieceType.find("Knight") != std::string::npos) {
+			piece->AddComponent<MeshComponent>(assetManager.GetComponent<MeshComponent>("Rook"));
+		}
+		actors.push_back(piece);
 		blackChessPieces[pieceType] = piece;
 	}
 	//create 2 vectors one for red checker and other for black
@@ -111,6 +162,7 @@ void Scene2::HandleEvents(const SDL_Event& sdlEvent) {
 		break;
 
 	case SDL_MOUSEBUTTONDOWN:
+			std::cout << Pick(sdlEvent.button.x, sdlEvent.button.y);
 		break;
 
 	case SDL_MOUSEBUTTONUP:
@@ -121,19 +173,47 @@ void Scene2::HandleEvents(const SDL_Event& sdlEvent) {
 	}
 }
 
-void Scene2::Update(const float deltaTime) {
-	static float angle_1;
-	static float angle_2;
-	angle_1 += -45.0f * deltaTime;
-	angle_2 += 60.0f * deltaTime;
-	Quaternion q = board->GetComponent<TransformComponent>()->getOrientation();
-	Quaternion rotate_1 = QMath::angleAxisRotation(angle_1, Vec3(1.0f, 0.0f, 1.0f));
-	Quaternion rotate_2 = QMath::angleAxisRotation(angle_2, Vec3(0.0f, 1.0f, 1.0f));
+int Scene2::Pick(int x, int y) {
+	glClearColor(1.0f, 1.0f, 1.0f, 0.0f); /// Paint the backgound white which is 0x00FFFFFF
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
+	Ref<ShaderComponent> shader = assetManager.GetComponent<ShaderComponent>("ColorPickingShader");
+	glUseProgram(shader->GetProgram());
+	glUniformMatrix4fv(shader->GetUniformID("projectionMatrix"), 1, GL_FALSE, camera->GetProjectionMatrix());
+	glUniformMatrix4fv(shader->GetUniformID("viewMatrix"), 1, GL_FALSE, camera->GetViewMatrix());
+	
+	
+	for (GLuint i = 0; i < actors.size(); i++) {
+		glUniformMatrix4fv(shader->GetUniformID("modelMatrix"), 1, GL_FALSE, actors[i]->GetModelMatrix());
+		glUniform1ui(shader->GetUniformID("colorID"), i);
+		actors[i]->GetComponent<MeshComponent>()->Render(GL_TRIANGLES);
+	}
+	glUseProgram(0);
 
-	// Adding slerp and making the movement smoother
-	float slerpValue = 0.5f;
-	Quaternion slerp = QMath::slerp(rotate_1, rotate_2, slerpValue);
-	board->GetComponent<TransformComponent>()->SetOrientation(slerp);
+
+	int viewport[4];
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	GLuint colorIndex;
+	glReadPixels(x, viewport[3] - y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &colorIndex);
+	colorIndex &= 0x00FFFFFF; /// This zeros out the alpha component
+
+	if (colorIndex == 0x00FFFFFF) return -1; /// Picked nothing
+	else return colorIndex;
+}
+
+void Scene2::Update(const float deltaTime) {
+	//static float angle_1;
+	//static float angle_2;
+	//angle_1 += -45.0f * deltaTime;
+	//angle_2 += 60.0f * deltaTime;
+	//Quaternion q = board->GetComponent<TransformComponent>()->getOrientation();
+	//Quaternion rotate_1 = QMath::angleAxisRotation(angle_1, Vec3(1.0f, 0.0f, 1.0f));
+	//Quaternion rotate_2 = QMath::angleAxisRotation(angle_2, Vec3(0.0f, 1.0f, 1.0f));
+
+	//// Adding slerp and making the movement smoother
+	//float slerpValue = 0.5f;
+	//Quaternion slerp = QMath::slerp(rotate_1, rotate_2, slerpValue);
+	//board->GetComponent<TransformComponent>()->SetOrientation(slerp);
 }
 
 void Scene2::Render() const {
@@ -156,12 +236,7 @@ void Scene2::Render() const {
 	Ref<TransformComponent> btc = board->GetComponent<TransformComponent>();
 	Ref<MaterialComponent> cwmc = assetManager.GetComponent<MaterialComponent>("WhiteCheckerMaterial");
 	Ref<MaterialComponent> cbmc = assetManager.GetComponent<MaterialComponent>("BlackCheckerMaterial");
-	Ref<MeshComponent> Bishop = assetManager.GetComponent<MeshComponent>("Bishop");
-	Ref<MeshComponent> King = assetManager.GetComponent<MeshComponent>("King");
-	Ref<MeshComponent> Knight = assetManager.GetComponent<MeshComponent>("Knight");
-	Ref<MeshComponent> Rook = assetManager.GetComponent<MeshComponent>("Rook");
-	Ref<MeshComponent>Queen = assetManager.GetComponent<MeshComponent>("Queen");
-	Ref<MeshComponent> Pawn = assetManager.GetComponent<MeshComponent>("Pawn");
+
 
 
 	glUseProgram(sc->GetProgram());
@@ -198,8 +273,6 @@ void Scene2::Render() const {
 			Knight->Render(GL_TRIANGLES);
 		}
 			// Assume 'checker' is a specific piece instance with a TransformComponent
-			
-			
 			glBindTexture(GL_TEXTURE_2D, 0);
 		}
 	for (const auto& checker : blackChessPieces) {

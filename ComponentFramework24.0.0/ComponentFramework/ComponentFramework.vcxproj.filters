@@ -153,5 +153,17 @@
     <None Include="shaders\defaultVert.glsl">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="shaders\textureFrag.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\textureVert.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\colorPickingFrag.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\colorPickingVert.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

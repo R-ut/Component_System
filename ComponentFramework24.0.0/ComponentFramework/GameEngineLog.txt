@@ -1,4 +1,4 @@
-Mon Apr 15 17:58:51 2024
+Wed Apr 17 10:14:22 2024
 [INFO]: Starting the SceneManager
 [INFO]: OpenGL version: 4.6.0 - Build 31.0.101.4255
 [INFO]: Graphics card vendor Intel
@@ -15,8 +15,15 @@ Mon Apr 15 17:58:51 2024
 [ERROR]: No such component name in file: C:\Users\Rutza\Desktop\Humber Sem 4\Game engine 4\ComponentFramework24.0.0\engine42024\ComponentFramework24.0.0\ComponentFramework\AssetManager.h on line: 34
 [ERROR]: No such component name in file: C:\Users\Rutza\Desktop\Humber Sem 4\Game engine 4\ComponentFramework24.0.0\engine42024\ComponentFramework24.0.0\ComponentFramework\AssetManager.h on line: 34
 [ERROR]: No such component name in file: C:\Users\Rutza\Desktop\Humber Sem 4\Game engine 4\ComponentFramework24.0.0\engine42024\ComponentFramework24.0.0\ComponentFramework\AssetManager.h on line: 34
+[ERROR]: No such component name in file: C:\Users\Rutza\Desktop\Humber Sem 4\Game engine 4\ComponentFramework24.0.0\engine42024\ComponentFramework24.0.0\ComponentFramework\AssetManager.h on line: 34
 [INFO]: Created Scene2: 
 [INFO]: Loading assets Scene2: 
+[INFO]: Uniforms:
+"modelMatrix" loc:1
+"projectionMatrix" loc:2
+"viewMatrix" loc:3
+"colorID" loc:4
+
 [INFO]: Uniforms:
 "lightPos" loc:3
 "modelMatrix" loc:2
@@ -24,6 +31,3 @@ Mon Apr 15 17:58:51 2024
 "viewMatrix" loc:1
 "myTexture" loc:4
 
-[INFO]: Deleting the SceneManager
-[INFO]: Deleting assets Scene2: 
-[INFO]: Deleted Scene2: 

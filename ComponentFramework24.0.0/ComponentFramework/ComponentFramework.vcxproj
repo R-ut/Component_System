@@ -165,8 +165,12 @@
     <Text Include="GameEngineLog.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\colorPickingFrag.glsl" />
+    <None Include="shaders\colorPickingVert.glsl" />
     <None Include="shaders\defaultFrag.glsl" />
     <None Include="shaders\defaultVert.glsl" />
+    <None Include="shaders\textureFrag.glsl" />
+    <None Include="shaders\textureVert.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

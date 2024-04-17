@@ -38,6 +38,14 @@ private:
 	Ref<Actor> checker;
 	std::unordered_map<std::string, Ref<Actor>> whiteChessPieces;
 	std::unordered_map<std::string, Ref<Actor>> blackChessPieces;
+	std::vector<Ref<Actor>> actors;
+	Ref<MeshComponent> Bishop = assetManager.GetComponent<MeshComponent>("Bishop");
+	Ref<MeshComponent> King = assetManager.GetComponent<MeshComponent>("King");
+	Ref<MeshComponent> Knight = assetManager.GetComponent<MeshComponent>("Knight");
+	Ref<MeshComponent> Rook = assetManager.GetComponent<MeshComponent>("Rook");
+	Ref<MeshComponent>Queen = assetManager.GetComponent<MeshComponent>("Queen");
+	Ref<MeshComponent> Pawn = assetManager.GetComponent<MeshComponent>("Pawn");
+
 public:
 	explicit Scene2();
 	virtual ~Scene2();
@@ -47,6 +55,7 @@ public:
 	virtual void Update(const float deltaTime) override;
 	virtual void Render() const override;
 	virtual void HandleEvents(const SDL_Event& sdlEvent) override;
+	int Pick(int x, int y);
 };
 
 
