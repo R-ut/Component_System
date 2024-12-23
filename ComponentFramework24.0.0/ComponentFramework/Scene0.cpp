@@ -24,7 +24,7 @@ bool Scene0::OnCreate() {
 
 	projectionMatrix = MMath::perspective(45.0f, (16.0f / 9.0f), 0.5f, 100.0f);
 	viewMatrix = MMath::lookAt(Vec3(0.0f, 0.0f, 5.0f), Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
-	mario = Ref<Actor>(nullptr);
+	mario = std::make_shared<Actor>(nullptr);
 	if (!mario) {return false;}
 	mario->AddComponent<MeshComponent>(nullptr, "meshes/Mario.obj");
 	mario->AddComponent<ShaderComponent>(nullptr,"shaders/textureVert.glsl","shaders/textureFrag.glsl");
@@ -34,7 +34,7 @@ bool Scene0::OnCreate() {
 	mario->ListComponents();
 	modelMatrix.loadIdentity();
 
-	hammer = Ref<Actor>(mario);
+	hammer = std::make_shared<Actor>(mario);
 	if (!hammer) { return false; }
 	hammer->AddComponent<MeshComponent>(nullptr, "meshes/Hammer.obj");
 	hammer->AddComponent<ShaderComponent>(nullptr, "shaders/textureVert.glsl", "shaders/textureFrag.glsl");
@@ -50,6 +50,9 @@ void Scene0::OnDestroy() {
 	Debug::Info("Deleting assets Scene0: ", __FILE__, __LINE__);
 	sphere->OnDestroy();
 	delete sphere;
+
+	mario->RemoveAllComponents();
+	mario->OnDestroy();
 }
 
 void Scene0::HandleEvents(const SDL_Event &sdlEvent) {
